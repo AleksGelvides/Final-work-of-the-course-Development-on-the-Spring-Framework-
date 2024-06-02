@@ -1,0 +1,18 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="db/changelog/db.changelog-generate.xml"/>
+
+    <changeSet id="1717086611411-1" author="alekseygelvides">
+        <sqlFile path="db/changelog/changeset/sqlScripts/init_roles.sql"/>
+    </changeSet>
+
+    <changeSet id="1717086611411-2" author="alekseygelvides">
+        <sqlFile path="db/changelog/changeset/sqlScripts/init_hotels.sql"/>
+    </changeSet>
+
+    <changeSet id="1717086611411-3" author="alekseygelvides">
+        <sqlFile path="db/changelog/changeset/sqlScripts/init_rooms.sql"/>
+    </changeSet>
+
+</databaseChangeLog>

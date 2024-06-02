@@ -1,0 +1,2 @@
+insert into hotels (hotel_name, header_ad, city_name, address, create_time, edit_time, distance_from_city_center, rating, rate_count) values ('zlxn-7', 'pellentesque', 'Polanica-Zdrój', '15 Westend Crossing', '11/18/2023', '12/30/2023', 908, 3, 14);
+insert into hotels (hotel_name, header_ad, city_name, address, create_time, edit_time, distance_from_city_center, rating, rate_count) values ('enac-0', 'dictumst morbi vestibulum', 'Kawahmanuk', '0 Ryan Road', '12/19/2023', '8/6/2023', 387, 1, 13);

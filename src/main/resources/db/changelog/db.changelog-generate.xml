@@ -1,0 +1,141 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-1">
+        <createTable tableName="booking">
+            <column name="booking_from" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="booking_to" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="create_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="edit_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="booking_pkey"/>
+            </column>
+            <column name="room_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+            <column name="comment" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-2">
+        <createTable tableName="hotels">
+            <column name="rate_count" type="INTEGER"/>
+            <column name="rating" type="INTEGER"/>
+            <column name="create_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="distance_from_city_center" type="BIGINT"/>
+            <column name="edit_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="hotels_pkey"/>
+            </column>
+            <column name="address" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="header_ad" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hotel_name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-3">
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="roles_pkey"/>
+            </column>
+            <column name="role" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-4">
+        <createTable tableName="rooms">
+            <column name="maximum_capacity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_price" type="numeric(38, 2)"/>
+            <column name="create_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="edit_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="hotel_id" type="BIGINT"/>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rooms_pkey"/>
+            </column>
+            <column name="room_description" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-5">
+        <createTable tableName="users">
+            <column name="create_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="edit_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-6">
+        <addUniqueConstraint columnNames="address" constraintName="hotels_address_key" tableName="hotels"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-7">
+        <addUniqueConstraint columnNames="header_ad" constraintName="hotels_header_ad_key" tableName="hotels"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-8">
+        <addUniqueConstraint columnNames="hotel_name" constraintName="hotels_hotel_name_key" tableName="hotels"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-9">
+        <addUniqueConstraint columnNames="role" constraintName="roles_role_key" tableName="roles"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-10">
+        <addUniqueConstraint columnNames="room_name" constraintName="rooms_room_name_key" tableName="rooms"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-11">
+        <addUniqueConstraint columnNames="email" constraintName="users_email_key" tableName="users"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-12">
+        <addUniqueConstraint columnNames="password" constraintName="users_password_key" tableName="users"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-13">
+        <addUniqueConstraint columnNames="username" constraintName="users_username_key" tableName="users"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-14">
+        <createTable tableName="user_role">
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_role_pkey"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_role_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-15">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="booking" constraintName="fk7udbel7q86k041591kj6lfmvw" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-16">
+        <addForeignKeyConstraint baseColumnNames="room_id" baseTableName="booking" constraintName="fkb6jhn9s6v53eb2cd9l7uhcd0m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="rooms" validate="true"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-17">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role" constraintName="fkj345gk1bovqvfame88rcx7yyx" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-18">
+        <addForeignKeyConstraint baseColumnNames="hotel_id" baseTableName="rooms" constraintName="fkp5lufxy0ghq53ugm93hdc941k" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="hotels" validate="true"/>
+    </changeSet>
+    <changeSet author="alekseygelvides (generated)" id="1717085789513-19">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role" constraintName="fkt7e7djp752sqn6w22i6ocqy6q" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="roles" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
