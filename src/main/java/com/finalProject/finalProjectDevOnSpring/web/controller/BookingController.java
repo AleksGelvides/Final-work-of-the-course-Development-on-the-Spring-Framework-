@@ -3,13 +3,12 @@ package com.finalProject.finalProjectDevOnSpring.web.controller;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationException;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationNotFoundException;
 import com.finalProject.finalProjectDevOnSpring.services.booking.BookingService;
-import com.finalProject.finalProjectDevOnSpring.web.dto.booking.BookingBaseDto;
-import com.finalProject.finalProjectDevOnSpring.web.dto.booking.BookingRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.search.BookingSearchCriteria;
+import com.finalProject.finalProjectDevOnSpring.dto.booking.BookingBaseDto;
+import com.finalProject.finalProjectDevOnSpring.dto.booking.BookingRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.search.BookingSearchCriteria;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +21,13 @@ public class BookingController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<BookingBaseDto> booking(@RequestBody BookingRequest request) throws ApplicationException, ApplicationNotFoundException {
-        return ResponseEntity.ok(bookingService.bookRoom(request));
+    public BookingBaseDto booking(@RequestBody BookingRequest request) throws ApplicationException, ApplicationNotFoundException {
+        return bookingService.bookRoom(request);
     }
 
     @GetMapping()
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<Page<BookingBaseDto>> getAllByUserId(BookingSearchCriteria criteria) {
-        return ResponseEntity.ok(bookingService.findAll(criteria));
+    public Page<BookingBaseDto> getAllByUserId(BookingSearchCriteria criteria) {
+        return bookingService.findAll(criteria);
     }
 }

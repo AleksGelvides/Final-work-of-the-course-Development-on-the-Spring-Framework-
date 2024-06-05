@@ -2,8 +2,8 @@ package com.finalProject.finalProjectDevOnSpring.web.controller;
 
 import com.finalProject.finalProjectDevOnSpring.TestApplication;
 import com.finalProject.finalProjectDevOnSpring.enumeration.RoleType;
-import com.finalProject.finalProjectDevOnSpring.web.dto.user.UserChangeRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.user.UserDto;
+import com.finalProject.finalProjectDevOnSpring.dto.user.UserChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.user.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;

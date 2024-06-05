@@ -2,13 +2,13 @@ package com.finalProject.finalProjectDevOnSpring.services.hotel;
 
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationNotFoundException;
 import com.finalProject.finalProjectDevOnSpring.models.entity.hotel.Hotel;
-import com.finalProject.finalProjectDevOnSpring.models.repository.HotelRepository;
-import com.finalProject.finalProjectDevOnSpring.models.repository.specifications.hotel.HotelSpecificationBuilder;
+import com.finalProject.finalProjectDevOnSpring.repository.HotelRepository;
+import com.finalProject.finalProjectDevOnSpring.repository.specifications.hotel.HotelSpecificationBuilder;
 import com.finalProject.finalProjectDevOnSpring.mapper.hotel.HotelMapper;
 import com.finalProject.finalProjectDevOnSpring.services.CommonService;
-import com.finalProject.finalProjectDevOnSpring.web.dto.hotel.HotelChangeRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.hotel.HotelDto;
-import com.finalProject.finalProjectDevOnSpring.web.dto.hotel.HotelRate;
+import com.finalProject.finalProjectDevOnSpring.dto.hotel.HotelChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.hotel.HotelDto;
+import com.finalProject.finalProjectDevOnSpring.dto.hotel.HotelRate;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -34,7 +34,7 @@ public class HotelService extends CommonService<HotelDto, HotelChangeRequest, Ho
         return (HotelDto) mapper.toDto(repository.save(hotel));
     }
 
-    private Hotel findHotel(Long hotelId) throws ApplicationNotFoundException {
+    public Hotel findHotel(Long hotelId) throws ApplicationNotFoundException {
         try {
             return repository.findById(hotelId)
                     .orElseThrow(() -> new ApplicationNotFoundException(

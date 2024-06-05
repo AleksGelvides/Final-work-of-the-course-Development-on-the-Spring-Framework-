@@ -4,7 +4,7 @@ import com.finalProject.finalProjectDevOnSpring.enumeration.RoleType;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationException;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationNotFoundException;
 import com.finalProject.finalProjectDevOnSpring.services.user.UserService;
-import com.finalProject.finalProjectDevOnSpring.web.dto.user.UserChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.user.UserChangeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

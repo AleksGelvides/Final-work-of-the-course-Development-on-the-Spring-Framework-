@@ -3,9 +3,9 @@ package com.finalProject.finalProjectDevOnSpring.web.controller;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationException;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationNotFoundException;
 import com.finalProject.finalProjectDevOnSpring.services.hotel.RoomService;
-import com.finalProject.finalProjectDevOnSpring.web.dto.room.RoomChangeRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.room.RoomDto;
-import com.finalProject.finalProjectDevOnSpring.web.dto.search.RoomSearchCriteria;
+import com.finalProject.finalProjectDevOnSpring.dto.room.RoomChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.room.RoomDto;
+import com.finalProject.finalProjectDevOnSpring.dto.search.RoomSearchCriteria;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/room")
@@ -31,8 +30,8 @@ public class RoomController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/all")
-    public ResponseEntity<Page<RoomDto>> findByCriteria(@Valid RoomSearchCriteria hotelSearchCriteria) {
-        return ResponseEntity.ok(service.findAll(hotelSearchCriteria));
+    public Page<RoomDto> findByCriteria(@Valid RoomSearchCriteria hotelSearchCriteria) {
+        return service.findAll(hotelSearchCriteria);
     }
 
     @Operation(
@@ -42,8 +41,8 @@ public class RoomController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping
-    public ResponseEntity<RoomDto> findById(@RequestParam Long roomId) throws ApplicationNotFoundException {
-        return ResponseEntity.ok(service.findById(roomId));
+    public RoomDto findById(@RequestParam Long roomId) throws ApplicationNotFoundException {
+        return service.findById(roomId);
     }
 
     @Operation(
@@ -53,8 +52,8 @@ public class RoomController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<RoomDto> createNew(@RequestBody @Valid RoomChangeRequest roomChangeRequest) throws ApplicationNotFoundException, ApplicationException {
-        return ResponseEntity.ok(service.saveOrUpdate(null, roomChangeRequest));
+    public RoomDto createNew(@RequestBody @Valid RoomChangeRequest roomChangeRequest) throws ApplicationNotFoundException, ApplicationException {
+        return service.saveOrUpdate(null, roomChangeRequest);
     }
 
     @Operation(
@@ -64,12 +63,9 @@ public class RoomController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping
-    public ResponseEntity<RoomDto> edit(@RequestParam Long roomId,
-                                              @RequestBody RoomChangeRequest roomChangeRequest) throws ApplicationNotFoundException, ApplicationException {
-        if (Objects.isNull(roomId)) {
-            throw new RuntimeException("Parameter roomId can't be null");
-        }
-        return ResponseEntity.ok(service.saveOrUpdate(roomId, roomChangeRequest));
+    public RoomDto edit(@RequestParam Long roomId,
+                        @RequestBody RoomChangeRequest roomChangeRequest) throws ApplicationNotFoundException, ApplicationException {
+        return service.saveOrUpdate(roomId, roomChangeRequest);
     }
 
     @Operation(

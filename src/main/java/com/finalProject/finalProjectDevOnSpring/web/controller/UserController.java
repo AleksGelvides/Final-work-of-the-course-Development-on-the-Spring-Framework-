@@ -2,9 +2,9 @@ package com.finalProject.finalProjectDevOnSpring.web.controller;
 
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationNotFoundException;
 import com.finalProject.finalProjectDevOnSpring.services.user.UserService;
-import com.finalProject.finalProjectDevOnSpring.web.dto.search.BaseSearchCriteria;
-import com.finalProject.finalProjectDevOnSpring.web.dto.user.UserChangeRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.user.UserDto;
+import com.finalProject.finalProjectDevOnSpring.dto.search.BaseSearchCriteria;
+import com.finalProject.finalProjectDevOnSpring.dto.user.UserChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.user.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -30,8 +29,8 @@ public class UserController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/all")
-    public ResponseEntity<Page<UserDto>> findByCriteria(@Valid BaseSearchCriteria searchCriteria) {
-        return ResponseEntity.ok(service.findAll(searchCriteria));
+    public Page<UserDto> findByCriteria(@Valid BaseSearchCriteria searchCriteria) {
+        return service.findAll(searchCriteria);
     }
 
     @Operation(
@@ -41,8 +40,8 @@ public class UserController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping
-    public ResponseEntity<UserDto> findById(@RequestParam Long userId) throws ApplicationNotFoundException {
-        return ResponseEntity.ok(service.findById(userId));
+    public UserDto findById(@RequestParam Long userId) throws ApplicationNotFoundException {
+        return service.findById(userId);
     }
 
     @Operation(
@@ -52,8 +51,8 @@ public class UserController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/findByUsername")
-    public ResponseEntity<UserDto> findByUsername(@RequestParam String userName) throws ApplicationNotFoundException {
-        return ResponseEntity.ok(service.findByUsername(userName));
+    public UserDto findByUsername(@RequestParam String userName) throws ApplicationNotFoundException {
+        return service.findByUsername(userName);
     }
 
     @Operation(
@@ -62,8 +61,8 @@ public class UserController {
             tags = {"user"}
     )
     @PostMapping
-    public ResponseEntity<UserDto> createNew(@RequestBody UserChangeRequest userChangeRequest) throws Exception {
-        return ResponseEntity.ok(service.saveOrUpdate(null, userChangeRequest));
+    public UserDto createNew(@RequestBody UserChangeRequest userChangeRequest) throws Exception {
+        return service.saveOrUpdate(null, userChangeRequest);
     }
 
     @Operation(
@@ -73,12 +72,9 @@ public class UserController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping
-    public ResponseEntity<UserDto> edit(@RequestParam Long userId,
-                                              @RequestBody UserChangeRequest userChangeRequest) throws Exception {
-        if (Objects.isNull(userId)) {
-            throw new RuntimeException("Parameter userId can't be null");
-        }
-        return ResponseEntity.ok(service.saveOrUpdate(userId, userChangeRequest));
+    public UserDto edit(@RequestParam Long userId,
+                        @RequestBody UserChangeRequest userChangeRequest) throws Exception {
+        return service.saveOrUpdate(userId, userChangeRequest);
     }
 
     @Operation(

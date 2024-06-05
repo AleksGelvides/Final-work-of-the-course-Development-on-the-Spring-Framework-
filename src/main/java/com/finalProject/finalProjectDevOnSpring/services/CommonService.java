@@ -2,10 +2,10 @@ package com.finalProject.finalProjectDevOnSpring.services;
 
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationException;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationNotFoundException;
-import com.finalProject.finalProjectDevOnSpring.models.repository.BaseRepository;
-import com.finalProject.finalProjectDevOnSpring.models.repository.specifications.BaseSpecificationBuilder;
+import com.finalProject.finalProjectDevOnSpring.repository.BaseRepository;
+import com.finalProject.finalProjectDevOnSpring.repository.specifications.BaseSpecificationBuilder;
 import com.finalProject.finalProjectDevOnSpring.mapper.BaseMapper;
-import com.finalProject.finalProjectDevOnSpring.web.dto.search.BaseSearchCriteria;
+import com.finalProject.finalProjectDevOnSpring.dto.search.BaseSearchCriteria;
 import org.springframework.data.domain.Page;
 
 import java.text.MessageFormat;

@@ -1,8 +1,8 @@
 package com.finalProject.finalProjectDevOnSpring.web.controller;
 
 import com.finalProject.finalProjectDevOnSpring.TestApplication;
-import com.finalProject.finalProjectDevOnSpring.web.dto.hotel.HotelChangeRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.hotel.HotelDto;
+import com.finalProject.finalProjectDevOnSpring.dto.hotel.HotelChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.hotel.HotelDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;

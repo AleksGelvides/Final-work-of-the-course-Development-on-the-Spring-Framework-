@@ -3,10 +3,10 @@ package com.finalProject.finalProjectDevOnSpring.web.controller;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationException;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationNotFoundException;
 import com.finalProject.finalProjectDevOnSpring.services.hotel.HotelService;
-import com.finalProject.finalProjectDevOnSpring.web.dto.hotel.HotelChangeRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.hotel.HotelDto;
-import com.finalProject.finalProjectDevOnSpring.web.dto.hotel.HotelRate;
-import com.finalProject.finalProjectDevOnSpring.web.dto.search.HotelSearchCriteria;
+import com.finalProject.finalProjectDevOnSpring.dto.hotel.HotelChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.hotel.HotelDto;
+import com.finalProject.finalProjectDevOnSpring.dto.hotel.HotelRate;
+import com.finalProject.finalProjectDevOnSpring.dto.search.HotelSearchCriteria;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -15,8 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/hotel")
@@ -32,8 +30,8 @@ public class HotelController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/all")
-    public ResponseEntity<Page<HotelDto>> findByCriteria(@Valid HotelSearchCriteria hotelSearchCriteria) {
-        return ResponseEntity.ok(service.findAll(hotelSearchCriteria));
+    public Page<HotelDto> findByCriteria(@Valid HotelSearchCriteria hotelSearchCriteria) {
+        return service.findAll(hotelSearchCriteria);
     }
 
     @Operation(
@@ -43,8 +41,8 @@ public class HotelController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping
-    public ResponseEntity<HotelDto> findById(@RequestParam Long hotelId) throws ApplicationNotFoundException {
-        return ResponseEntity.ok(service.findById(hotelId));
+    public HotelDto findById(@RequestParam Long hotelId) throws ApplicationNotFoundException {
+        return service.findById(hotelId);
     }
 
     @Operation(
@@ -54,8 +52,8 @@ public class HotelController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/rate")
-    public ResponseEntity<HotelDto> rate(@RequestBody HotelRate rate) throws ApplicationNotFoundException {
-        return ResponseEntity.ok(service.rate(rate));
+    public HotelDto rate(@RequestBody HotelRate rate) throws ApplicationNotFoundException {
+        return service.rate(rate);
     }
 
     @Operation(
@@ -65,8 +63,8 @@ public class HotelController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<HotelDto> createNew(@RequestBody HotelChangeRequest hotelChangeRequest) throws ApplicationNotFoundException, ApplicationException {
-        return ResponseEntity.ok(service.saveOrUpdate(null, hotelChangeRequest));
+    public HotelDto createNew(@RequestBody HotelChangeRequest hotelChangeRequest) throws ApplicationNotFoundException, ApplicationException {
+        return service.saveOrUpdate(null, hotelChangeRequest);
     }
 
     @Operation(
@@ -76,12 +74,9 @@ public class HotelController {
     )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping
-    public ResponseEntity<HotelDto> edit(@RequestParam Long hotelId,
-                                              @RequestBody HotelChangeRequest hotelChangeRequest) throws ApplicationNotFoundException, ApplicationException {
-        if (Objects.isNull(hotelId)) {
-            throw new RuntimeException("Parameter hotelId can't be null");
-        }
-        return ResponseEntity.ok(service.saveOrUpdate(hotelId, hotelChangeRequest));
+    public HotelDto edit(@RequestParam Long hotelId,
+                         @RequestBody HotelChangeRequest hotelChangeRequest) throws ApplicationNotFoundException, ApplicationException {
+        return service.saveOrUpdate(hotelId, hotelChangeRequest);
     }
 
     @Operation(

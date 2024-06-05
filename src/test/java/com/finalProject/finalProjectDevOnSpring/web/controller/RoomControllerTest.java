@@ -1,8 +1,8 @@
 package com.finalProject.finalProjectDevOnSpring.web.controller;
 
 import com.finalProject.finalProjectDevOnSpring.TestApplication;
-import com.finalProject.finalProjectDevOnSpring.web.dto.room.RoomChangeRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.room.RoomDto;
+import com.finalProject.finalProjectDevOnSpring.dto.room.RoomChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.room.RoomDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;

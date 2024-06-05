@@ -4,21 +4,21 @@ import com.finalProject.finalProjectDevOnSpring.enumeration.RoleType;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationException;
 import com.finalProject.finalProjectDevOnSpring.exception.ApplicationNotFoundException;
 import com.finalProject.finalProjectDevOnSpring.models.entity.user.User;
-import com.finalProject.finalProjectDevOnSpring.models.repository.RoleRepository;
-import com.finalProject.finalProjectDevOnSpring.models.repository.UserRepository;
+import com.finalProject.finalProjectDevOnSpring.models.entity.user.UserRole;
+import com.finalProject.finalProjectDevOnSpring.repository.RoleRepository;
+import com.finalProject.finalProjectDevOnSpring.repository.UserRepository;
 import com.finalProject.finalProjectDevOnSpring.mapper.user.UserMapper;
 import com.finalProject.finalProjectDevOnSpring.services.CommonService;
 import com.finalProject.finalProjectDevOnSpring.services.statistic.StatisticService;
-import com.finalProject.finalProjectDevOnSpring.web.dto.search.BaseSearchCriteria;
-import com.finalProject.finalProjectDevOnSpring.web.dto.user.UserChangeRequest;
-import com.finalProject.finalProjectDevOnSpring.web.dto.user.UserDto;
+import com.finalProject.finalProjectDevOnSpring.dto.user.UserChangeRequest;
+import com.finalProject.finalProjectDevOnSpring.dto.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -45,6 +45,12 @@ public class UserService extends CommonService<UserDto, UserChangeRequest, User,
                 .orElseThrow(() -> new ApplicationNotFoundException(
                         MessageFormat.format("User with username: {0} not found", username))
                 ));
+    }
+
+    public User findUserById(Long id) throws ApplicationNotFoundException {
+        return repository.findById(id).orElseThrow(() -> new ApplicationNotFoundException(
+                MessageFormat.format("User with id: {0} not found", id))
+        );
     }
 
     protected User findUserByUsername(String username) throws ApplicationNotFoundException {
@@ -83,18 +89,32 @@ public class UserService extends CommonService<UserDto, UserChangeRequest, User,
         return ((UserRepository) repository).existsByUsernameAndEmail(username, email);
     }
 
-    private User requestToUser(UserChangeRequest request) {
+    private User requestToUser(UserChangeRequest request) throws ApplicationNotFoundException {
         return mapper.changeToEntity(request)
+                .setRole(enumToRole(request.role()))
                 .setPassword(passwordEncoder.encode(request.password()));
     }
 
     private void updateRoles(Set<RoleType> roles, User user) throws ApplicationNotFoundException {
         for (RoleType roleEnum : roles) {
-            var role = roleRepository.findByRole(roleEnum)
-                    .orElseThrow(() -> new ApplicationNotFoundException(
-                            MessageFormat.format("Role with type {0} not found", roleEnum.name())));
+            var role = getRole(roleEnum);
             role.getUsers().add(user);
             roleRepository.save(role);
         }
+    }
+
+    private Set<UserRole> enumToRole(Set<RoleType> role) throws ApplicationNotFoundException {
+        Set<UserRole> result = new HashSet<>();
+        for (RoleType roleEnum : role) {
+            var entityRole = getRole(roleEnum);
+            result.add(entityRole);
+        }
+        return result;
+    }
+
+    private UserRole getRole(RoleType roleType) throws ApplicationNotFoundException {
+        return roleRepository.findByRole(roleType)
+                .orElseThrow(() -> new ApplicationNotFoundException(
+                        MessageFormat.format("Role with name: {0} not found", roleType)));
     }
 }
